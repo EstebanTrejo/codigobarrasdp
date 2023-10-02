@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MiControlador;
 use App\Http\Controllers\BarcodeController;
 
 /*
@@ -18,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/mostrar-vista', [MiControlador::class, 'mostrarVista'])->name('mostrar-vista');
 
 Route::get('/barcode-form', [BarcodeController::class, 'showBarcodeForm'])->name('barcode-form');
 Route::post('/generate-barcodes', [BarcodeController::class, 'generateBarcodes'])->name('generate-barcodes');

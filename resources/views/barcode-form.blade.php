@@ -18,7 +18,7 @@
             @csrf
             <div class="form-group text-center">
                 <label for="codigo" class="h3">Código Actual:</label>
-                <input type="text" id="codigo" name="codigo" value="{{ $startCode }}" readonly class="form-control form-control-lg text-center">
+                <input type="text" id="codigo" name="codigo" value="{{ $startCode }}" class="form-control form-control-lg text-center">
             </div>
             
             <div class="form-group text-center">
@@ -44,13 +44,34 @@
         // Obtener referencias a los elementos de input
         const quantityInput = document.getElementById('quantity');
         const resultadoInput = document.getElementById('resultado');
-        const startCode = parseInt({{ $startCode }}, 10);
-        const calculatedResult2 = startCode + quantityInput;
+        const startCode = parseInt(document.getElementById('codigo').value, 10);
+
+        // const startCode = parseInt({{ $startCode }}, 10);
+        
+
+        // aqui el codigo de actualizacion de todo
+
+        // Obtener referencias a los elementos de input
+
+        // Función para actualizar el resultado
+        function updateResult() {
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const startCode = parseInt(document.getElementById('codigo').value, 10);
+            const calculatedResult = startCode + quantity - 1;
+            document.getElementById('resultado').value = calculatedResult;
+        }
+
+        // Escuchar el evento de cambio en el input de cantidad
+        document.getElementById('codigo').addEventListener('input', updateResult);
+
+        // Escuchar el evento de cambio en el input de código
+        document.getElementById('resultado').addEventListener('input', updateResult);
 
     
         // Escuchar el evento de cambio en el input de cantidad
         quantityInput.addEventListener('input', function() {
             const quantity = parseInt(quantityInput.value, 10);
+            const startCode = parseInt(document.getElementById('codigo').value, 10);
             const calculatedResult = startCode + quantity - 1;
             // Actualizar el valor del input de resultado
             resultadoInput.value = calculatedResult;
@@ -68,7 +89,11 @@
                 confirmButtonText: 'Entendido'
             });
             this.value = 1;
-            resultadoInput.value = startCode;
+            const quantity = parseInt(quantityInput.value, 10);
+            const startCode = parseInt(document.getElementById('codigo').value, 10);
+            const calculatedResult = startCode + quantity - 1;
+            // Actualizar el valor del input de resultado
+            resultadoInput.value = calculatedResult;
 
             // setTimeout(function() {
             //     location.reload();
@@ -80,7 +105,9 @@
 // estas seguro en el pdf
 document.getElementById('generate-pdf-button').addEventListener('click', function() {
     const quantity = parseInt(quantityInput.value, 10);
-    const calculatedResult = startCode + quantity - 1;
+            const startCode = parseInt(document.getElementById('codigo').value, 10);
+            const calculatedResult = startCode + quantity - 1;
+            // Actualizar el valor del input de resultado
     const confirmationText = 'Esta acción generará el PDF con codigos desde: ' + startCode + ' hasta ' + calculatedResult + '. \n¿Estás seguro de continuar?';
 
     Swal.fire({
